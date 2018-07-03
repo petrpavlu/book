@@ -44,3 +44,7 @@ issue. Instead, logout can be achieved by the user by changing the URL to the
 application to include a non-existent username, for instance,
 `https://logout@book/`. This overrides the previous username which effectively
 causes a logout.
+
+## License
+
+This project is released under the terms of [the MIT License](COPYING).
