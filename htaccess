@@ -1,0 +1,10 @@
+# Prevent access to all .ht files and the database.
+<FilesMatch "^(\.ht.*|bookmarks\.db)$">
+  Require all denied
+</FilesMatch>
+
+# Configure HTTP basic authentication.
+AuthType Basic
+AuthName "Restricted Content"
+AuthUserFile /absolute/path/to/.htpasswd
+Require valid-user
