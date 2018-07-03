@@ -19,14 +19,14 @@ function read_bookmarks($db, &$error)
 {
   $bookmarks = array();
 
-  $result = $db->query('SELECT rowid, * FROM bookmarks');
+  $result = $db->query('SELECT id, url FROM bookmarks');
   if ($result === FALSE) {
     $error = 'Failed to read bookmarks: error executing query.';
     return $bookmarks;
   }
 
   while ($row = $result->fetchArray())
-    $bookmarks[] = array($row['rowid'], $row['url']);
+    $bookmarks[] = array($row['id'], $row['url']);
   return $bookmarks;
 }
 
@@ -69,13 +69,13 @@ function process_delete_request($db, &$bookmarks, &$error)
     return;
   }
 
-  $stmt = $db->prepare('DELETE FROM bookmarks WHERE rowid=:rowid');
+  $stmt = $db->prepare('DELETE FROM bookmarks WHERE id=:id');
   if ($stmt === FALSE) {
     $error = 'Failed to delete bookmark: error preparing query.';
     return;
   }
-  if ($stmt->bindValue(':rowid', $_POST['id'], SQLITE3_INTEGER) === FALSE) {
-    $error = 'Failed to delete bookmark: error binding rowid value.';
+  if ($stmt->bindValue(':id', $_POST['id'], SQLITE3_INTEGER) === FALSE) {
+    $error = 'Failed to delete bookmark: error binding id value.';
     return;
   }
   $result = $stmt->execute();
@@ -108,7 +108,8 @@ function process_install_request($db, &$display_page, &$error)
 // Process the install POST request that initializes the database.
 function process_install2_request($db, &$display_page, &$error)
 {
-  $res = $db->query('CREATE TABLE bookmarks (url TEXT);');
+  $res = $db->query('CREATE TABLE bookmarks (id INTEGER PRIMARY KEY ' .
+    'AUTOINCREMENT, url TEXT);');
   if ($res === FALSE) {
     $error = 'Failed to create the bookmarks table.';
     return;
