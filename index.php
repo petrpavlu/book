@@ -171,7 +171,12 @@ main($display_page, $bookmarks, $error);
     </style>
   </head>
   <body>
-    <h1>Bookmarks</h1>
+    <h1>
+      <a href="<?php echo htmlspecialchars(
+        strtok($_SERVER['REQUEST_URI'], '?')); ?>">
+        Bookmarks
+      </a>
+    </h1>
     <hr>
 <?php if ($error !== NULL): // Error case. ?>
     <p>
