@@ -177,14 +177,14 @@ main($display_page, $bookmarks, $error);
     <p>
       Error: <?php echo htmlspecialchars($error); ?>
     </p>
-<?php elseif ($display_page == DisplayPage::Install): // Install request. ?>
+<?php elseif ($display_page === DisplayPage::Install): // Install request. ?>
     <form method="post" action="">
       <div>
         <input type="hidden" name="install2">
         <input type="submit" value="Install">
       </div>
     </form>
-<?php elseif ($display_page == DisplayPage::InstallDone): // Install done. ?>
+<?php elseif ($display_page === DisplayPage::InstallDone): // Install done. ?>
     <p>Installation successful.</p>
 <?php else: // Output list of bookmarks. ?>
     <ul>
