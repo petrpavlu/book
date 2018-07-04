@@ -2,8 +2,9 @@
 
 This web application is a single-script bookmark manager. It was created to
 provide a simple storage for links to web articles that one can read later. The
-server part requires a web server with the PHP+SQLite support. The client side
-relies only on HTML4+CSS2 making it accessible from any common web browser.
+server part requires a web server with the [PHP][PHP]+[SQLite][SQLite] support.
+The client side relies only on [HTML4][HTML4]+[CSS2][CSS2] making it accessible
+from any common web browser.
 
 ## Installation
 
@@ -12,9 +13,10 @@ relies only on HTML4+CSS2 making it accessible from any common web browser.
 2. Access `index.php?install` from a web browser and click the _Install_ button.
    This step initializes the SQLite database.
 
-3. Optional: Protect access to the page with HTTP basic authentication:
+3. Optional: Protect access to the page with [HTTP basic
+   authentication][HTTPBasicAuth]:
 
-   Note: These steps are tailored for the Apache HTTP Server.
+   Note: These steps are tailored for the [Apache HTTP Server][ApacheHTTPD].
 
     1. Create a user and set the password:
 
@@ -48,3 +50,10 @@ causes a logout.
 ## License
 
 This project is released under the terms of [the MIT License](COPYING).
+
+[PHP]: http://php.net/
+[SQLite]: https://www.sqlite.org/
+[HTML4]: https://www.w3.org/TR/html4/
+[CSS2]: https://www.w3.org/TR/CSS2/
+[HTTPBasicAuth]: https://en.wikipedia.org/wiki/Basic_access_authentication
+[ApacheHTTPD]: https://httpd.apache.org/
