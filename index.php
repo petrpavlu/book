@@ -12,31 +12,25 @@ abstract class DisplayPage
   const Normal = 0;
   const Install = 1;
   const InstallDone = 2;
+  const RedirectHome = 3;
 }
 
-// Read bookmarks from the database.
-function read_bookmarks($db, &$error)
-{
-  $bookmarks = array();
-
+// Process the normal GET request that reads all bookmarks.
+function process_get_request($db, &$bookmarks, &$error) {
   $result = $db->query('SELECT id, url FROM bookmarks');
   if ($result === FALSE) {
     $error = 'Failed to read bookmarks: error executing query.';
-    return $bookmarks;
+    return;
   }
 
+  $bookmarks = array();
   while ($row = $result->fetchArray())
     $bookmarks[] = array($row['id'], $row['url']);
   return $bookmarks;
 }
 
-// Process the normal GET request that reads all bookmarks.
-function process_get_request($db, &$bookmarks, &$error) {
-  $bookmarks = read_bookmarks($db, $error);
-}
-
 // Process the normal POST request that adds a new bookmark.
-function process_post_request($db, &$bookmarks, &$error)
+function process_post_request($db, &$display_page, &$error)
 {
   if (!isset($_POST['url'])) {
     $error = 'No bookmark URL specified.';
@@ -58,11 +52,11 @@ function process_post_request($db, &$bookmarks, &$error)
     return;
   }
 
-  $bookmarks = read_bookmarks($db, $error);
+  $display_page = DisplayPage::RedirectHome;
 }
 
 // Process the delete POST request that deletes an existing bookmark.
-function process_delete_request($db, &$bookmarks, &$error)
+function process_delete_request($db, &$display_page, &$error)
 {
   if (!isset($_POST['id'])) {
     $error = 'No bookmark ID specified.';
@@ -84,7 +78,7 @@ function process_delete_request($db, &$bookmarks, &$error)
     return;
   }
 
-  $bookmarks = read_bookmarks($db, $error);
+  $display_page = DisplayPage::RedirectHome;
 }
 
 // Process the install GET request that displays the installation page.
@@ -139,9 +133,9 @@ function main(&$display_page, &$bookmarks, &$error)
     if (isset($_POST['install2']))
       process_install2_request($db, $display_page, $error);
     elseif (isset($_POST['delete']))
-      process_delete_request($db, $bookmarks, $error);
+      process_delete_request($db, $display_page, $error);
     else
-      process_post_request($db, $bookmarks, $error);
+      process_post_request($db, $display_page, $error);
     break;
   default:
     $error = "Unknown request '$_SERVER[REQUEST_METHOD]'.";
@@ -157,6 +151,10 @@ $display_page = DisplayPage::Normal;
 $bookmarks = array();
 $error = NULL;
 main($display_page, $bookmarks, $error);
+if ($display_page === DisplayPage::RedirectHome) {
+  header("Location: " . strtok($_SERVER['REQUEST_URI'], '?'));
+  exit();
+}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
 <html>
