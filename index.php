@@ -144,7 +144,7 @@ function main(&$display_page, &$bookmarks, &$error)
       process_post_request($db, $bookmarks, $error);
     break;
   default:
-    $error = "Unknown request '" . $_SERVER['REQUEST_METHOD'] . "'.";
+    $error = "Unknown request '$_SERVER[REQUEST_METHOD]'.";
     break;
   }
 
