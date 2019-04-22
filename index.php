@@ -161,9 +161,11 @@ if ($display_page === DisplayPage::RedirectHome) {
   <head>
     <title>Bookmarks</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style type="text/css">
       h1 {text-align: center}
       hr {border: none; height: 1px; background-color: black}
+      a {overflow-wrap: break-word}
       .inline {display: inline}
       .delete-button {border: none}
       .footer {text-align: center}
