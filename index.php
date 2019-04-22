@@ -160,6 +160,7 @@ if ($display_page === DisplayPage::RedirectHome) {
 <html>
   <head>
     <title>Bookmarks</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <style type="text/css">
       h1 {text-align: center}
       hr {border: none; height: 1px; background-color: black}
