@@ -17,7 +17,7 @@ abstract class DisplayPage
 
 // Process the normal GET request that reads all bookmarks.
 function process_get_request($db, &$bookmarks, &$error) {
-  $result = $db->query('SELECT id, url FROM bookmarks');
+  $result = $db->query('SELECT id, url FROM bookmarks ORDER BY id DESC');
   if ($result === FALSE) {
     $error = 'Failed to read bookmarks: error executing query.';
     return;
@@ -166,6 +166,8 @@ if ($display_page === DisplayPage::RedirectHome) {
       h1 {text-align: center}
       hr {border: none; height: 1px; background-color: black}
       a {overflow-wrap: break-word}
+      .url {display: flex; align-items: center}
+      .url input[name="url"] {flex: 1; margin-left: 5px; margin-right: 5px}
       .inline {display: inline}
       .delete-button {border: none}
       .footer {text-align: center}
@@ -193,6 +195,16 @@ if ($display_page === DisplayPage::RedirectHome) {
 <?php elseif ($display_page === DisplayPage::InstallDone): // Install done. ?>
     <p>Installation successful.</p>
 <?php else: // Output list of bookmarks. ?>
+    <form method="post" action="">
+      <fieldset>
+        <legend>Add new bookmark:</legend>
+        <div class="url">
+          URL: <input type="text" name="url">
+          <input type="submit" value="Add entry">
+        </div>
+      </fieldset>
+    </form>
+    <hr>
     <ul>
 <?php
 foreach ($bookmarks as $bookmark) {
@@ -211,14 +223,6 @@ foreach ($bookmarks as $bookmark) {
 }
 ?>
     </ul>
-    <form method="post" action="">
-      <fieldset>
-        <legend>Add new bookmark:</legend>
-        <input type="hidden" name="key" value="<?php echo $key; ?>">
-        URL: <input type="text" name="url">
-        <input type="submit" value="Add entry">
-      </fieldset>
-    </form>
 <?php endif; ?>
     <hr>
     <p class="footer"><?php echo htmlspecialchars(date("Y-m-d H:i:s")); ?></p>
