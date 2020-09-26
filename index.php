@@ -199,8 +199,11 @@ if ($display_page === DisplayPage::RedirectHome) {
       <fieldset>
         <legend>Add new bookmark:</legend>
         <div class="url">
-          URL: <input type="text" name="url">
+          URL: <input id="url-input" type="text" name="url">
           <input type="submit" value="Add entry">
+          <script type="text/javascript">
+            document.getElementById("url-input").focus();
+          </script>
         </div>
       </fieldset>
     </form>

@@ -4,7 +4,7 @@ This web application is a single-script bookmark manager. It was created to
 provide a simple storage for links to web articles that one can read later. The
 server part requires a web server with the [PHP][PHP]+[SQLite][SQLite] support.
 The client side relies only on [HTML4][HTML4]+[CSS2][CSS2] and some non-crucial
-bits from CSS3 which makes the pages accessible from any common web browser.
+bits of JS+CSS3 which makes the pages accessible from any common web browser.
 
 ## Installation
 
