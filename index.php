@@ -19,7 +19,7 @@ abstract class DisplayPage
 function process_get_request($db, &$bookmarks, &$error) {
   $result = $db->query('SELECT id, url FROM bookmarks ORDER BY id DESC');
   if ($result === FALSE) {
-    $error = 'Failed to read bookmarks: error executing query.';
+    $error = 'Failed to read bookmarks: error executing the query.';
     return;
   }
 
@@ -39,16 +39,16 @@ function process_post_request($db, &$display_page, &$error)
 
   $stmt = $db->prepare('INSERT INTO bookmarks (url) VALUES (:url)');
   if ($stmt === FALSE) {
-    $error = 'Failed to add new bookmark: error preparing query.';
+    $error = 'Failed to add the new bookmark: error preparing the query.';
     return;
   }
   if ($stmt->bindValue(':url', $_POST['url'], SQLITE3_TEXT) === FALSE) {
-    $error = 'Failed to add new bookmark: error binding url value.';
+    $error = 'Failed to add the new bookmark: error binding the url value.';
     return;
   }
   $result = $stmt->execute();
   if ($result === FALSE) {
-    $error = 'Failed to add new bookmark: error executing query.';
+    $error = 'Failed to add the new bookmark: error executing the query.';
     return;
   }
 
@@ -65,16 +65,16 @@ function process_delete_request($db, &$display_page, &$error)
 
   $stmt = $db->prepare('DELETE FROM bookmarks WHERE id=:id');
   if ($stmt === FALSE) {
-    $error = 'Failed to delete bookmark: error preparing query.';
+    $error = 'Failed to delete the bookmark: error preparing the query.';
     return;
   }
   if ($stmt->bindValue(':id', $_POST['id'], SQLITE3_INTEGER) === FALSE) {
-    $error = 'Failed to delete bookmark: error binding id value.';
+    $error = 'Failed to delete the bookmark: error binding the id value.';
     return;
   }
   $result = $stmt->execute();
   if ($result === FALSE) {
-    $error = 'Failed to delete bookmark: error executing query.';
+    $error = 'Failed to delete the bookmark: error executing the query.';
     return;
   }
 
@@ -117,7 +117,7 @@ function main(&$display_page, &$bookmarks, &$error)
   try {
     $db = new SQLite3('bookmarks.db');
   } catch (Exception $e) {
-    $error = 'Failed to open bookmark database.';
+    $error = 'Failed to open the bookmark database.';
     return;
   }
 
@@ -144,7 +144,7 @@ function main(&$display_page, &$bookmarks, &$error)
 
   // Close the database.
   if ($db->close() === FALSE && $error === NULL)
-    $error = 'Failed to close bookmark database.';
+    $error = 'Failed to close the bookmark database.';
 }
 
 $display_page = DisplayPage::Normal;
