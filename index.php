@@ -11,10 +11,10 @@ const DATABASE = 'bookmarks.db';
 
 abstract class DisplayPage
 {
-  const Normal = 0;
-  const Install = 1;
-  const InstallDone = 2;
-  const RedirectHome = 3;
+  const NORMAL = 0;
+  const INSTALL = 1;
+  const INSTALL_DONE = 2;
+  const REDIRECT_HOME = 3;
 }
 
 // Process the normal GET request that reads all bookmarks.
@@ -54,7 +54,7 @@ function process_post_request($db, &$display_page, &$error)
     return;
   }
 
-  $display_page = DisplayPage::RedirectHome;
+  $display_page = DisplayPage::REDIRECT_HOME;
 }
 
 // Process the delete POST request that deletes an existing bookmark.
@@ -80,7 +80,7 @@ function process_delete_request($db, &$display_page, &$error)
     return;
   }
 
-  $display_page = DisplayPage::RedirectHome;
+  $display_page = DisplayPage::REDIRECT_HOME;
 }
 
 // Process the install GET request that displays the installation page.
@@ -98,7 +98,7 @@ function process_install_request($db, &$display_page, &$error)
     return;
   }
 
-  $display_page = DisplayPage::Install;
+  $display_page = DisplayPage::INSTALL;
 }
 
 // Process the install POST request that initializes the database.
@@ -110,7 +110,7 @@ function process_install2_request($db, &$display_page, &$error)
     $error = 'Failed to create the bookmarks table.';
     return;
   }
-  $display_page = DisplayPage::InstallDone;
+  $display_page = DisplayPage::INSTALL_DONE;
 }
 
 function main(&$display_page, &$bookmarks, &$error)
@@ -149,11 +149,11 @@ function main(&$display_page, &$bookmarks, &$error)
     $error = 'Failed to close the bookmark database.';
 }
 
-$display_page = DisplayPage::Normal;
+$display_page = DisplayPage::NORMAL;
 $bookmarks = array();
 $error = NULL;
 main($display_page, $bookmarks, $error);
-if ($display_page === DisplayPage::RedirectHome) {
+if ($display_page === DisplayPage::REDIRECT_HOME) {
   header("Location: " . strtok($_SERVER['REQUEST_URI'], '?'));
   exit();
 }
@@ -187,14 +187,14 @@ if ($display_page === DisplayPage::RedirectHome) {
     <p>
       Error: <?php echo htmlspecialchars($error); ?>
     </p>
-<?php elseif ($display_page === DisplayPage::Install): // Install request. ?>
+<?php elseif ($display_page === DisplayPage::INSTALL): // Install request. ?>
     <form method="post" action="">
       <div>
         <input type="hidden" name="install2">
         <input type="submit" value="Install">
       </div>
     </form>
-<?php elseif ($display_page === DisplayPage::InstallDone): // Install done. ?>
+<?php elseif ($display_page === DisplayPage::INSTALL_DONE): // Install done. ?>
     <p>Installation successful.</p>
 <?php else: // Output list of bookmarks. ?>
     <form method="post" action="">
