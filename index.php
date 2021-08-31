@@ -7,6 +7,8 @@
 
 header('Content-Type: text/html; charset=UTF-8');
 
+const DATABASE = 'bookmarks.db';
+
 abstract class DisplayPage
 {
   const Normal = 0;
@@ -115,7 +117,7 @@ function main(&$display_page, &$bookmarks, &$error)
 {
   // Open the database.
   try {
-    $db = new SQLite3('bookmarks.db');
+    $db = new SQLite3(DATABASE);
   } catch (Exception $e) {
     $error = 'Failed to open the bookmark database.';
     return;
